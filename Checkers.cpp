@@ -46,7 +46,7 @@ void Board::setupBoard()
         field[9 + i + 6 * 8] = 'o';
     }
     // Just to test
-    field[46] = 'X';
+    /*field[46] = 'X';
     field[39] = 'o';
     field[37] = 'o';
     /*field[34] = 'o';
@@ -299,7 +299,7 @@ bool Board::checkIfLegal(int state, int moveFrom, int moveTo, bool onLeft, bool 
                 return true;
         }
     }
-    else if (state == 5)
+    else if (state == 7)
     {
         if (onLeft)
         {
@@ -391,7 +391,7 @@ void Board::makeMove(bool xplays, int moveFrom, int moveTo)
             {
                 field[moveFrom] = ' ';
                 field[moveTo] = 'x';
-                if (field[moveTo] > 55)
+                if (moveTo > 55)
                     field[moveTo] = 'X';
             }
             else if (checkIfLegal(1, moveFrom, moveTo, onSiteLeftTake, onSiteRightTake))
@@ -399,6 +399,8 @@ void Board::makeMove(bool xplays, int moveFrom, int moveTo)
                 Opawns -= 1;
                 field[moveFrom] = ' ';
                 field[moveTo] = 'x';
+                if (moveTo > 55)
+                    field[moveTo] = 'X';
             }
 
             else
@@ -440,24 +442,59 @@ void Board::makeMove(bool xplays, int moveFrom, int moveTo)
     }
     else
     {
-        if (checkIfLegal(2, moveFrom, moveTo, onSiteLeft, onSiteRight))
+        if ((moveTo > 0 && moveTo < 64 && moveFrom > 0 && moveFrom < 64) && field[moveFrom] == 'o')
         {
-            field[moveFrom] = ' ';
-            field[moveTo] = 'o';
-        }
-        else if (checkIfLegal(3, moveFrom, moveTo, onSiteLeftTake, onSiteRightTake))
-        {
-            Xpawns -= 1;
-            field[moveFrom] = ' ';
-            field[moveTo] = 'o';
-        }
+            if (checkIfLegal(2, moveFrom, moveTo, onSiteLeft, onSiteRight))
+            {
+                field[moveFrom] = ' ';
+                field[moveTo] = 'o';
+                if (moveTo < 8)
+                    field[moveTo] = 'O';
+            }
+            else if (checkIfLegal(3, moveFrom, moveTo, onSiteLeftTake, onSiteRightTake))
+            {
+                Xpawns -= 1;
+                field[moveFrom] = ' ';
+                field[moveTo] = 'O';
+                if (moveTo < 8)
+                    field[moveTo] = 'O';
+            }
 
+            else
+            {
+                cout << "ILLEGAL MOVEEEE pick new fields\n";
+                cin >> moveFrom >> moveTo;
+                cout << '\n';
+                makeMove(true, moveFrom, moveTo);
+            }
+        }
+        else if (moveTo > 0 && moveTo < 64 && moveFrom > 0 && moveFrom < 64 && field[moveFrom] == 'O')
+        {
+            if (checkIfLegal(6, moveFrom, moveTo, onSiteLeft, onSiteRight))
+            {
+                field[moveFrom] = ' ';
+                field[moveTo] = 'O';
+            }
+            else if (checkIfLegal(7, moveFrom, moveTo, onSiteLeftTake, onSiteRightTake))
+            {
+                Xpawns -= 1;
+                field[moveFrom] = ' ';
+                field[moveTo] = 'O';
+            }
+            else
+            {
+                cout << "ILLEGAL MOVEEEE pick new fields\n";
+                cin >> moveFrom >> moveTo;
+                cout << '\n';
+                makeMove(true, moveFrom, moveTo);
+            }
+        }
         else
         {
             cout << "ILLEGAL MOVEEEE pick new fields\n";
             cin >> moveFrom >> moveTo;
             cout << '\n';
-            makeMove(false, moveFrom, moveTo);
+            makeMove(true, moveFrom, moveTo);
         }
     }
 }
