@@ -29,8 +29,8 @@ Board::~Board()
 void Board::setupBoard()
 {
 
-    Xpawns = 8;
-    Opawns = 8;
+    Xpawns = 12;
+    Opawns = 12;
     for (int k = 0; k < 64; ++k)
     {
         field[k] = ' ';
@@ -39,11 +39,13 @@ void Board::setupBoard()
     {
         field[i] = 'x';
         field[9 + i] = 'x';
+        field[16 + i] = 'x';
     }
     for (int i = 0; i < 8; i += 2)
     {
         field[6 * 8 + i] = 'o';
         field[9 + i + 6 * 8] = 'o';
+        field[6*7-1+i] = 'o';
     }
     // Just to test
     /*field[46] = 'X';
