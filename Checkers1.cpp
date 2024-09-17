@@ -45,7 +45,7 @@ void Board::setupBoard()
     {
         field[6 * 8 + i] = 'o';
         field[9 + i + 6 * 8] = 'o';
-        field[6*7-1+i] = 'o';
+        field[6 * 7 - 1 + i] = 'o';
     }
     // Just to test
     /*field[46] = 'X';
