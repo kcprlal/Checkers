@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 using namespace std;
 
 class Board
@@ -519,6 +520,12 @@ bool Board::checkForWin(bool xplays)
     }
 }
 
+void clearInput()
+{
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
 int main()
 {
     bool continuegame = true;
@@ -533,7 +540,11 @@ int main()
             b.drawBoard();
             cout << '\n';
             cout << "Now X plays\n";
-            cin >> moveFrom >> moveTo;
+            while (!(cin >> moveFrom >> moveTo))
+            {
+                cout << "You have to use integers: ";
+                clearInput();
+            }
             cout << "\n";
             b.makeMove(true, moveFrom, moveTo);
 
@@ -542,12 +553,17 @@ int main()
                 cout << "X WINS!!!\n";
                 continuegame = false;
             }
+
             if (continuegame)
             {
                 b.drawBoard();
                 cout << '\n';
                 cout << "Now O plays\n";
-                cin >> moveFrom >> moveTo;
+                while (!(cin >> moveFrom >> moveTo))
+                {
+                    cout << "You have to use integers: ";
+                    clearInput();
+                }
                 cout << "\n";
                 b.makeMove(false, moveFrom, moveTo);
                 if (b.checkForWin(false))
@@ -558,7 +574,11 @@ int main()
             }
         }
         cout << "Want to play again?[yes=1/no=0]\n";
-        cin >> continuegame;
+        while (!(cin >> continuegame))
+            {
+                cout << "You have to use integers: ";
+                clearInput();
+            }
     }
     return 0;
 }
