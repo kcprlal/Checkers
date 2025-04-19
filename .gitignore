@@ -1,0 +1,14 @@
+# Pliki wynikowe
+app
+*.o
+
+# Katalog z plikami binarnymi
+bin/
+/.vscode
+# Pliki systemowe i edytora
+*.swp
+*.tmp
+*.bak
+*.log
+.DS_Store
+Thumbs.db
